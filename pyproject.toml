@@ -1,0 +1,11 @@
+[project]
+name = "reddit-content-bot"
+version = "0.1.0"
+description = "A bot to generate content from reddit to be posted on social media."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "praw",
+    "pydantic_settings",
+    "pydantic"
+]
