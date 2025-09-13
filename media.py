@@ -41,7 +41,7 @@ def compose_video_with_speech(
     video_preset: str = "veryfast",
     enable_ducking: bool = True,
     ducking_threshold: float = 0.05,
-    ducking_ratio: float = 8.0,
+    ducking_ratio: float = 4.0,
     ducking_attack_ms: int = 15,
     ducking_release_ms: int = 300,
     speech_mix_weight: float = 1.0,
