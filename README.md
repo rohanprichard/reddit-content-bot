@@ -10,7 +10,8 @@ output = compose_video_with_speech(
     background_video_path="data/bg.mp4",
     background_music_path="data/music.mp3",
     output_video_path="data/final-<uuid>.mp4",
-    music_volume_db_reduction=16.0,  # make music sit under speech
+    music_volume_db_reduction=8.0,   # gentler reduction
+    enable_ducking=True,             # auto-duck music under speech
 )
 print("Wrote:", output)
 ```

@@ -38,6 +38,8 @@ def main():
             background_video_path=video_path,
             background_music_path=music_path,
             output_video_path=f"data/{uuid}/final.mp4",
+            music_volume_db_reduction=8.0,
+            enable_ducking=True,
         )
         video_generation_time = time() - audio_generation_time
         print(f"Generated video {output}. Time taken: {video_generation_time} seconds")

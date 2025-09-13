@@ -36,9 +36,16 @@ def compose_video_with_speech(
     background_music_path: str,
     output_video_path: str,
     *,
-    music_volume_db_reduction: float = 16.0,
+    music_volume_db_reduction: float = 8.0,
     video_crf: int = 18,
     video_preset: str = "veryfast",
+    enable_ducking: bool = True,
+    ducking_threshold: float = 0.05,
+    ducking_ratio: float = 8.0,
+    ducking_attack_ms: int = 15,
+    ducking_release_ms: int = 300,
+    speech_mix_weight: float = 1.0,
+    music_mix_weight: float = 1.0,
 ) -> str:
     """
     Create a video matching the speech duration by trimming a long background video and music,
@@ -116,7 +123,18 @@ def compose_video_with_speech(
         ])
 
         # 3) Mix speech and (attenuated) music
-        #    We keep duration as speech (first input) so the mix ends with the narration.
+        #    Optional: apply sidechain compression (ducking) so music dips under speech but stays audible between phrases.
+        if enable_ducking:
+            filter_complex = (
+                f"[1:a][0:a]sidechaincompress=threshold={ducking_threshold}:ratio={ducking_ratio}:"
+                f"attack={ducking_attack_ms}:release={ducking_release_ms}[duck];"
+                f"[0:a][duck]amix=inputs=2:weights={speech_mix_weight} {music_mix_weight}:duration=first:dropout_transition=3[a]"
+            )
+        else:
+            filter_complex = (
+                f"[0:a][1:a]amix=inputs=2:weights={speech_mix_weight} {music_mix_weight}:duration=first:dropout_transition=3[a]"
+            )
+
         _run_command([
             "ffmpeg",
             "-y",
@@ -125,7 +143,7 @@ def compose_video_with_speech(
             "-i",
             trimmed_music_path,
             "-filter_complex",
-            "[0:a][1:a]amix=inputs=2:duration=first:dropout_transition=3,volume=1[a]",
+            filter_complex,
             "-map",
             "[a]",
             "-c:a",
