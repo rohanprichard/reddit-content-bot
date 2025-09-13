@@ -7,5 +7,8 @@ requires-python = ">=3.13"
 dependencies = [
     "praw",
     "pydantic_settings",
-    "pydantic"
+    "pydantic",
+    "anthropic>=0.67.0",
+    "instructor>=1.11.3",
+    "elevenlabs>=2.15.0",
 ]
