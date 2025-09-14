@@ -11,3 +11,12 @@ wheels/
 
 # Secrets
 .env
+
+bg.mp4
+music.mp3
+audio.mp3
+story.txt
+final.mp4
+card.png
+
+.DS_Store

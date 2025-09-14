@@ -11,4 +11,9 @@ dependencies = [
     "anthropic>=0.67.0",
     "instructor>=1.11.3",
     "elevenlabs>=2.15.0",
+    "openai>=1.107.2",
+    "openai-whisper>=20250625",
+    "torch>=2.8.0",
+    "torchaudio>=2.8.0",
+    "torchvision>=0.23.0",
 ]
